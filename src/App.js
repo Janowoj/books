@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BookCreate from "./components/BookCreate";
+import BookList from "./components/BookList";
 
 
 
@@ -9,16 +10,17 @@ function App() {
 
     const createBook = (title) => {
         // console.log("I would like to read:", title);
-        const updatedBooks = [
-            ...books,
-            {id: 123, title} // title: title
+        const updatedBooks = [...books, {
+            id: Math.round(Math.random() * 9999), // in some cases it may not be unique, but for small applications it is OK!
+            title} // title: title
         ];
         setBooks(updatedBooks)
         };
     
 
-    return <div>
-        {books.length}
+    return <div className="app">
+        {/* {books.length} */}
+        <BookList books={books}/>
         <BookCreate onCreate={createBook} />
     </div>
 }
