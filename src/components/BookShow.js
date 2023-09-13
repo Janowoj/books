@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BookEdit from './BookEdit';
 
-function BookShow({ book, onDelete }) {
+function BookShow({ book, onDelete, onEdit }) {
 
     const [showEdit, setShowEdit] = useState(false); // we don't want to ShowEdit by default
 
@@ -13,11 +13,15 @@ function BookShow({ book, onDelete }) {
         onDelete(book.id);
     };
 
-    let content = <h3>{book.title}</h3>;
-    if (showEdit) {
-        content = <BookEdit book={book} />;
+    const handleSubmit = (id, newTitle) => {
+        setShowEdit(false);
+        onEdit(id, newTitle) // we need to pass the id of the book and the new title to BookShow component
     }
 
+    let content = <h3>{book.title}</h3>;
+    if (showEdit) {
+        content = <BookEdit onSubmit={handleSubmit} book={book} />;
+    }
 
     return <div className="book-show">
         <div>{content}</div>
@@ -37,3 +41,6 @@ export default BookShow;
 
 // Content is changing, when user clicks the pensil icon,
 // so we need to use state.
+
+// onEdit={onEdit} removed from BookShow component.
+// Now we have one single prop whenever user submits a form.
