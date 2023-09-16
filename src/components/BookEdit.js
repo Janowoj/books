@@ -13,7 +13,8 @@ function BookEdit({ book, onSubmit }) {
 
         // console.log('New title:', title) // now we have onEdit
         // onEdit(book.id, title);
-        onSubmit(book.id, title); // this makes the form disappear (showEdit = false)
+        // onSubmit(); // this makes the form disappear (showEdit = false)
+        onSubmit(book.id, title);
     }
 
     return <form className="book-edit" onSubmit={handleSubmit}>

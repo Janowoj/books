@@ -36,7 +36,7 @@ function App() {
         };
     
     return <div className="app">
-        {/* {books.length} */}
+        <h1>Reading List</h1>
         <BookList onEdit={editBookById} books={books} onDelete={deleteBookById}/>
         <BookCreate onCreate={createBook} />
     </div>
@@ -209,3 +209,8 @@ export default App;
 //     setBook(rest);
 // }
 
+// ============================================================================================================ //
+
+// Props:
+// book - an object with id and title properties
+// onSubmit - a function that will be called when the user submits the form
