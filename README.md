@@ -59,7 +59,7 @@ III. When the user creates/deletes/edits a book, update the API, then update loc
 
 Standalone API client:
 
-1. Program used to make requests to an API server, specifically fir development and testing purposes.
+1. Program used to make requests to an API server, specifically for development and testing purposes.
 2. There are many free API clients
 3. I am going to use one built into VS Code
 
@@ -91,5 +91,68 @@ Content-Type: application/json
 
 We get back an empty object.
 
+-------------
+
+React is concerned with showing content on the screen.
+To make the network request we are going to use a separate (third party )library called Axios:
+
+npm install axios
+
+Now in App.js we are going to do 2 things:
+
+1. Make a request to JSON Server to get the list of books.
+2. Take the list of books and update the state.
+
+WE don't need to use Math.random() anymore, because we are going to get the ID from the API server.
+
+Now we need to import Axios into App.js and make a request to the API server.
+
+ const createBook = async (title) => {
+        const response = await axios.post('http://localhost:3001/books', {
+            title
+        });
+ }
+
+ console.log(response);
+
+ now in the browser in the Network tab we select Fetch/XHR.
+
+ Then when we create a new book, we can see the request that was made to the API server and the status code that we got back in the Headers tab.
+
+ In the console in the data property we can see the book that was created.
+
+ To check if the book was create we can go to the db.json file and see the book there.
+
+ Now we don't need console.log(response) anymore in the createBook function and don't need either to create book object manually, so we delete them:
+
+const createBook = async (title) => {
+        const response = await axios.post('http://localhost:3001/books', {
+            title
+        });
+        console.log(response);
+        const updatedBooks = [...books, {
+            // id: Math.round(Math.random() * 9999), // in some cases it may not be unique, but for small applications it is OK!
+            // title} // title: title
+        ];
+        setBooks(updatedBooks)
+        };
+
+Now the function createBook looks like this:
+
+const createBook = async (title) => {
+        const response = await axios.post('http://localhost:3001/books', {
+            title
+        });
+        const updatedBooks = [...books, 
+            response.data
+        ];
+        setBooks(updatedBooks)
+        };
 
 
+Now we can type some book and check if it is seen on the screen and in the db.json file.
+
+After refreshing the page we still don't have a persistent list of books.
+
+
+    
