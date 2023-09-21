@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
@@ -8,6 +8,25 @@ import BookList from "./components/BookList";
 function App() {
 
     const [books, setBooks] = useState([]);
+
+    const fetchBooks = async () => {
+        const response = await axios.get('http://localhost:3001/books');
+    
+        setBooks(response.data);
+    };
+    // when should we invoke this function?
+    useEffect(() => {
+        fetchBooks();  
+    }, []);
+
+    // DON'T DO THIS!!!
+    // fetchBooks(); 
+    // because it will be invoked EVERY TIME the component is rendered! (infinite loop)
+
+    // DO THIS:
+    // useEffect(() => {
+    //     console.log("I am inside useEffect!");
+    // }, []);
 
     const editBookById = (id, newTitle) => {
         const updatedBooks = books.map((book) => {
@@ -224,3 +243,14 @@ export default App;
 // Props:
 // book - an object with id and title properties
 // onSubmit - a function that will be called when the user submits the form
+
+
+// ============================================================================================================ //
+
+//  useEffect
+
+//  1. This is a function that we import from React
+//  2. Used to run code when the component is INICIALLY rendered and sometimes when it is re-rendered
+//  3. First argument is a function that contains the code that you want to run
+//  4. Second argument is an array of dependencies or nothing - this controls whether or not the function is executed on re-renders.
+
