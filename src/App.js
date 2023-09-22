@@ -28,7 +28,14 @@ function App() {
     //     console.log("I am inside useEffect!");
     // }, []);
 
-    const editBookById = (id, newTitle) => {
+    const editBookById = async (id, newTitle) => {
+        
+        const response = await axios.put(`http://localhost:3001/books/${id}`, {
+            title: newTitle
+        });
+
+        // console.log(response);
+    
         const updatedBooks = books.map((book) => {
             if(book.id === id) {
                 return {...book, title: newTitle}
@@ -253,4 +260,56 @@ export default App;
 //  2. Used to run code when the component is INICIALLY rendered and sometimes when it is re-rendered
 //  3. First argument is a function that contains the code that you want to run
 //  4. Second argument is an array of dependencies or nothing - this controls whether or not the function is executed on re-renders.
+
+// Three tricky points about useEffect:
+
+// I. Understanding WHEN our arrow function is invoked
+// II. Understanding the arrow function's RETURN VALUE
+// III. Understanding state variable references
+
+// I. Understanding WHEN our arrow function is invoked
+
+// 1. Component called
+// 2. JSX is returned
+// 3. DOM is updated
+
+// Initial render is ended!
+// State is updated! (user made some changes)
+
+// 1. Component called
+// 2. JSX is returned
+// 3. DOM is updated
+
+// Second render is ended!
+// State is updated!
+
+// ... and so on
+// ... so when is our arrow function invoked?
+// it is automatically invoked immediately after the initial render 
+// and (maybe) after every re-render (second argument controls this).
+
+// EXAMPLES:
+
+    // useEffect(() => {
+    //     console.log("I am inside useEffect!");
+    // }, []);
+
+// called after inicial render
+// never called again
+
+  // useEffect(() => {
+    //     console.log("I am inside useEffect!");
+    // });
+
+// called after inicial render
+// also called after every re-render
+
+    // useEffect(() => {
+    //     console.log("I am inside useEffect!");
+    // }, [counter]);
+
+// called after inicial render
+// also called after every re-render if counter has changed (very rare)
+
+  
 

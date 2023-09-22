@@ -50,5 +50,11 @@ export default BookEdit;
 
 // ==============================================
 
- 
+// Whenever we call editBookById, we are going to make a request to the server
+// and update some books with some particular id.
+// E.g. the book of id 1 should now have a title of "The Great Gatsby".
+
+// The API server is going to send the response back with the updated book.
+
+//  After that, we are going to update the state of books with the updated book.
 
