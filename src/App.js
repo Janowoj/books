@@ -34,11 +34,10 @@ function App() {
             title: newTitle
         });
 
-        // console.log(response);
     
         const updatedBooks = books.map((book) => {
             if(book.id === id) {
-                return {...book, title: newTitle}
+                return {...book, ...response.data}
             }
         return book; 
         });
@@ -310,6 +309,9 @@ export default App;
 
 // called after inicial render
 // also called after every re-render if counter has changed (very rare)
+
+// To avoid mistakes with out of date state, we shoud take the response 
+// and use that to update our state instead of using the state directly (manually).
 
   
 

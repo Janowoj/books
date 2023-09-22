@@ -154,5 +154,63 @@ Now we can type some book and check if it is seen on the screen and in the db.js
 
 After refreshing the page we still don't have a persistent list of books.
 
+<!-- testing useEffect: -->
+
+https://codepen.io/sgrider/pen/BarEowz?editors=1011
+
+const { useState, useEffect } = React;
+
+function App() {
+  console.clear();
+  const [counterOne, setCounterOne] = useState(0);
+  const [counterTwo, setCounterTwo] = useState(0);
+
+//   testing 3 types of useEffect:
+  useEffect(() => {
+    console.log('Only once')
+  }, []);
+  
+    useEffect(() => {
+    console.log('Every time the state is rerendered')
+  });
+  
+  useEffect(() => {
+    console.log('Every time couterOne state is rerendered')
+  }, [counterOne]);
+  
+  useEffect(() => {
+    console.log('Every time couterTwo state is rerendered')
+  }, [counterTwo]);
+  
+  useEffect(() => {
+    console.log('Every time both counters State is rerendered')
+  }, [counterOne, counterTwo]);
+  
+  return (
+    <div className="app">
+      <div>
+        <button onClick={() => setCounterOne(counterOne + 1)}>++ Counter One</button>               
+        <div>
+          Counter One Value:
+        </div>
+        <h3>{counterOne}</h3>
+      </div>
+      <span className="divide" />
+      <div>
+        <button onClick={() => setCounterTwo(counterTwo + 1)}>++ Counter Two</button>
+        <div>
+          Counter Two Value:
+        </div>
+        <h3>{counterTwo}</h3>
+      </div>
+    </div>
+  );
+}
+
+const el = document.querySelector('#root');
+const root = ReactDOM.createRoot(el);
+
+root.render(<App />);
+
 
     

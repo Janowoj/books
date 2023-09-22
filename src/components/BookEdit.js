@@ -20,11 +20,12 @@ function BookEdit({ book, onSubmit }) {
     return <form className="book-edit" onSubmit={handleSubmit}>
         <label>Title</label>
         <input className="input" value={title} onChange={handleChange} />
-        <button className="button is-primary" >Save</button> // user has to know, that the book title was succesfully edited
+        <button className="button is-primary" >Save</button>
     </form>
 }
 
 export default BookEdit;
+// user has to know, that the book title was succesfully edited
 
 // whenever user submits a form after making a change,
 //  the visibility of edit component should be toggled!

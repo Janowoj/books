@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "title": "Pan Tadeusz",
+      "title": "Pan Tadeusz - Adam Mickiewicz",
       "id": 1
     },
     {
@@ -33,7 +33,7 @@
       "id": 8
     },
     {
-      "title": "Krzyżacy",
+      "title": "Krzyżacy - Henryk Sienkiewicz",
       "id": 9
     },
     {
