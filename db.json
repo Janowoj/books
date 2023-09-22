@@ -5,32 +5,12 @@
       "id": 1
     },
     {
-      "title": "Pan Tadeusz",
-      "id": 2
-    },
-    {
       "title": "Quo vadis?",
       "id": 3
     },
     {
-      "title": "Krzyżacy",
-      "id": 4
-    },
-    {
       "title": "Ogniem i mieczem",
       "id": 5
-    },
-    {
-      "title": "go fishing",
-      "id": 6
-    },
-    {
-      "title": "Pan Tadeusz",
-      "id": 7
-    },
-    {
-      "title": "quo vadis",
-      "id": 8
     },
     {
       "title": "Krzyżacy - Henryk Sienkiewicz",
@@ -39,14 +19,6 @@
     {
       "title": "Nostromo",
       "id": 10
-    },
-    {
-      "title": "go",
-      "id": 11
-    },
-    {
-      "title": "go",
-      "id": 12
     }
   ]
 }

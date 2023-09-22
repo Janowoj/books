@@ -45,12 +45,14 @@ function App() {
         setBooks(updatedBooks);
     };
 
-    const deleteBookById = (id) => {
+    const deleteBookById = async (id) => {
+        await axios.delete(`http://localhost:3001/books/${id}`);
+
         const updatedBooks = books.filter((book) => {
-            return id !== book.id;
+            return book.id !== id;
         });
         setBooks(updatedBooks);
-    }
+    };
 
     const createBook = async (title) => {
         const response = await axios.post('http://localhost:3001/books', {
@@ -61,12 +63,12 @@ function App() {
 
         // console.log("I would like to read:", title);
         const updatedBooks = [...books, 
-            response.data
+            response.data];
             // {
             // id: Math.round(Math.random() * 9999), // in some cases it may not be unique, but for small applications it is OK!
             // title
         // } // title: title
-        ];
+        
         setBooks(updatedBooks)
         };
     
