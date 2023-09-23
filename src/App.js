@@ -91,6 +91,8 @@ export default App;
 // 4. To render the Provider we have to write something like:
 // <BooksContext.Provider>
 
+// ==============================================
+
 
 // II. Specify the data that will be shared
 
@@ -122,6 +124,8 @@ export default App;
 // );
 // }
 
+// ==============================================
+
 // III. 'Consume' the context in the components that need the data
 
 // In order to access the data from the context we have to use the useContext hook:
@@ -133,5 +137,9 @@ export default App;
 
 //     return <div>{something}</div>
 
+// ==============================================
+
+// APPLICATION STATE: used by multiple components
+// COMPONENT STATE: used by a few components (e.g. BookEdit)
 
 
