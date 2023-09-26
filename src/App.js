@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useContext } from "react";
+// import axios from "axios";
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
-
+import BooksContext from "./context/books";
 
 
 function App() {
 
-    const [books, setBooks] = useState([]);
+    // const [books, setBooks] = useState([]);
 
-    const fetchBooks = async () => {
-        const response = await axios.get('http://localhost:3001/books');
+    // const fetchBooks = async () => {
+    //     const response = await axios.get('http://localhost:3001/books');
 
-        setBooks(response.data);
-    };
+    //     setBooks(response.data);
+    // };
     // when should we invoke this function?
+
+    const { fetchBooks } = useContext(BooksContext); // we reach out from the App component this entire object and try to pull out of it fetchBooks function
+
     useEffect(() => {
         fetchBooks();
     }, []);
@@ -28,54 +31,53 @@ function App() {
     //     console.log("I am inside useEffect!");
     // }, []);
 
-    const editBookById = async (id, newTitle) => {
+    // const editBookById = async (id, newTitle) => {
 
-        const response = await axios.put(`http://localhost:3001/books/${id}`, {
-            title: newTitle
-        });
+    //     const response = await axios.put(`http://localhost:3001/books/${id}`, {
+    //         title: newTitle
+    //     });
 
 
-        const updatedBooks = books.map((book) => {
-            if (book.id === id) {
-                return { ...book, ...response.data }
-            }
-            return book;
-        });
+    //     const updatedBooks = books.map((book) => {
+    //         if (book.id === id) {
+    //             return { ...book, ...response.data }
+    //         }
+    //         return book;
+    //     });
 
-        setBooks(updatedBooks);
-    };
+    //     setBooks(updatedBooks);
+    // };
 
-    const deleteBookById = async (id) => {
-        await axios.delete(`http://localhost:3001/books/${id}`);
+    // const deleteBookById = async (id) => {
+    //     await axios.delete(`http://localhost:3001/books/${id}`);
 
-        const updatedBooks = books.filter((book) => {
-            return book.id !== id;
-        });
-        setBooks(updatedBooks);
-    };
+    //     const updatedBooks = books.filter((book) => {
+    //         return book.id !== id;
+    //     });
+    //     setBooks(updatedBooks);
+    // };
 
-    const createBook = async (title) => {
-        const response = await axios.post('http://localhost:3001/books', {
-            title
-        });
+    // const createBook = async (title) => {
+    //     const response = await axios.post('http://localhost:3001/books', {
+    //         title
+    //     });
 
-        // console.log(response);
+    //     // console.log(response);
 
-        // console.log("I would like to read:", title);
-        const updatedBooks = [...books,
-        response.data];
-        // {
-        // id: Math.round(Math.random() * 9999), // in some cases it may not be unique, but for small applications it is OK!
-        // title
-        // } // title: title
+    //     // console.log("I would like to read:", title);
+    //     const updatedBooks = [...books,
+    //     response.data];
+    //     // {
+    //     // id: Math.round(Math.random() * 9999), // in some cases it may not be unique, but for small applications it is OK!
+    //     // title
+    //     // } // title: title
 
-        setBooks(updatedBooks)
-    };
+
 
     return <div className="app">
         <h1>Reading List</h1>
-        <BookList onEdit={editBookById} books={books} onDelete={deleteBookById} />
-        <BookCreate onCreate={createBook} />
+        <BookList />
+        <BookCreate />
     </div>
 }
 
@@ -142,4 +144,9 @@ export default App;
 // APPLICATION STATE: used by multiple components
 // COMPONENT STATE: used by a few components (e.g. BookEdit)
 
+// ==============================================
+
+// Now we want to move our state from App.js to the books context Provider:
+
+// In BookList and BookCreate components we are no longer going to receive props in the App.js component, but we will use the useContext hook to access the data from the context:
 
