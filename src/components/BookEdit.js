@@ -1,8 +1,10 @@
 import { useState } from "react";
+import useBooksContext from '../hooks/use-books-context';
 
 function BookEdit({ book, onSubmit }) {
 
     const [title, setTitle] = useState(book.title);
+    const { editBookById } = useBooksContext();
 
     const handleChange = (event) => {
         setTitle(event.target.value);
@@ -14,14 +16,17 @@ function BookEdit({ book, onSubmit }) {
         // console.log('New title:', title) // now we have onEdit
         // onEdit(book.id, title);
         // onSubmit(); // this makes the form disappear (showEdit = false)
-        onSubmit(book.id, title);
+        onSubmit();
+        editBookById(book.id, title);
     }
 
-    return <form className="book-edit" onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input className="input" value={title} onChange={handleChange} />
-        <button className="button is-primary" >Save</button>
-    </form>
+    return (
+        <form className="book-edit" onSubmit={handleSubmit}>
+            <label>Title</label>
+            <input className="input" value={title} onChange={handleChange} />
+            <button className="button is-primary" >Save</button>
+        </form>
+    );
 }
 
 export default BookEdit;
@@ -59,3 +64,8 @@ export default BookEdit;
 
 //  After that, we are going to update the state of books with the updated book.
 
+// REFACTORING with CONTEXT:
+
+// 1. When we call onSubmit we don't have to pass the id of the book and the title.
+//  2. We are calling editBookById with the id of the book and the title.
+// editBookById(book.id, title);

@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import BooksContext from "../context/books";
+import { useState } from "react";
+import useBooksContext from "../hooks/use-books-context";
 
 function BookCreate() {
 
     const [title, setTitle] = useState('');
-    const { createBook } = useContext(BooksContext);
+    const { createBook } = useBooksContext();
 
     const handleChange = (event) => {
         setTitle(event.target.value);
@@ -16,13 +16,15 @@ function BookCreate() {
         setTitle("");
     }
 
-    return <div className="book-create">
-        <form onSubmit={handleSubmit}>
+    return (
+        <div className="book-create">
             <h3 className="">Add a Book</h3>
-            <label>Title</label>
-            <input className='input' value={title} onChange={handleChange} />
-            <button className="button">Submit</button>
-        </form>
-    </div>
+            <form onSubmit={handleSubmit}>
+                <label>Title</label>
+                <input className='input' value={title} onChange={handleChange} />
+                <button className="button">Submit</button>
+            </form>
+        </div>
+    );
 }
 export default BookCreate;

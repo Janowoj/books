@@ -74,11 +74,13 @@ function App() {
 
 
 
-    return <div className="app">
-        <h1>Reading List</h1>
-        <BookList />
-        <BookCreate />
-    </div>
+    return (
+        <div className="app">
+            <h1>Reading List</h1>
+            <BookList />
+            <BookCreate />
+        </div>
+    );
 }
 
 export default App;
@@ -150,3 +152,14 @@ export default App;
 
 // In BookList and BookCreate components we are no longer going to receive props in the App.js component, but we will use the useContext hook to access the data from the context:
 
+// HOOKS:
+
+// Funcions that add additional features to a component.
+
+// useState: allows us to use component state in a functional component.
+// useEffect: allows a component to run code at specific points in time (allows us to use lifecycle methods in a functional component).
+// useContext: allows a component to access values stored in context.
+
+// CUSTOM HOOKS: functions that we write to make reusable bits of logic.
+//  Usually reuse basic hooks like useState, useEffect, useContext.
+// Can do a lot or a little.
