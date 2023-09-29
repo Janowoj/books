@@ -163,3 +163,5 @@ export default App;
 // CUSTOM HOOKS: functions that we write to make reusable bits of logic.
 //  Usually reuse basic hooks like useState, useEffect, useContext.
 // Can do a lot or a little.
+
+// In this app we will create a custom hook to make an existing hools more convenient to use.

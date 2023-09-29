@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "title": "Pan Tadeusz - Adam Mickiewicz",
+      "title": "Pan Tadeusz",
       "id": 1
     },
     {
@@ -11,10 +11,6 @@
     {
       "title": "Ogniem i mieczem",
       "id": 5
-    },
-    {
-      "title": "Krzyżacy - Henryk Sienkiewicz",
-      "id": 9
     },
     {
       "title": "Mały Książę",
