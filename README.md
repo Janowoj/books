@@ -448,5 +448,133 @@ root.render(<App />);
 // To avoid mistakes with out of date state, we shoud take the response 
 // and use that to update our state instead of using the state directly (manually).
 
+# FIXING THE BUG:
 
-    
+// THIS CODE IS WRONG:
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  // olny one time when the app component is first rendered to the screen
+  useEffect(() => {
+    // don't do this
+    document.body.onclick = () => {
+      console.log(counter);
+    };
+  }, []);
+
+  return (
+    <div>
+      <button onClick={() => setCounter(counter + 1)}>+ Increment</button>
+      <div>Count: {counter}</div>
+    </div>
+  );
+}
+
+export default App;
+
+// ALSO THIS CODE IS WRONG:
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  // olny one time when the app component is first rendered to the screen
+  
+  const onClick = () => {
+    console.log(counter);
+  };
+  
+  useEffect(() => {
+    // don't do this
+    document.body.onclick = onClick;
+      
+  }, []);
+
+  return (
+    <div>
+      <button onClick={() => setCounter(counter + 1)}>+ Increment</button>
+      <div>Count: {counter}</div>
+    </div>
+  );
+}
+
+export default App;
+
+// THIS CODE IS CORRECT:
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  // olny one time when the app component is first rendered to the screen
+
+  useEffect(() => {
+    // don't do this
+    document.body.onclick = () => {
+      console.log(counter);
+    };
+  }, [counter]);
+
+  return (
+    <div>
+      <button onClick={() => setCounter(counter + 1)}>+ Increment</button>
+      <div>Count: {counter}</div>
+    </div>
+  );
+}
+
+export default App;
+
+
+# Following the ESLint rules can lead more bugs!
+
+Whenever you get a warning from ESLint, you should read it carefully and decide if you want to follow the advice or not.
+
+We have two totally different variables with the same name (fetchBooks) and we are using them in different places.
+As it is defined in the useEffect, fetchBooks is going to be reren every time the component is rerendered.
+
+This creates an infinite loop!
+
+That is wht class components are much easier to use than functional components, especially for beginners.
+
+# What we should do to fix the bug:
+
+We have to tell React that fetchBooks is not going to change over time.
+To do this we need to use useCallback hook.
+
+useCallback is a hook to fix some performance bugs.
+
+useCallback behaves different way after the initial render.
+
+useCallback is never going to run function for us (it is different from useEffect).
+
+
+## in the first render:
+useCallback returns a function that we put as the first argument.
+
+## in the second render:
+useCallback behavies differently. It is going to change slightly depending on whether or not the second argument is empty array.
+
+If the second argument IS AN EMPTY ARRAY, useCallback is going to return the exact SAME FUNCTION that it returned in the first render. It ignores the first argument.
+
+If the second argument is NOT AN EMPTY ARRAY, useCallback is going to return a NEW FUNCTION.
+
+### inside the book.js file:
+instead of:
+
+const stableFetchBooks = useCallback(fetchBooks, []);
+
+we can write:
+
+const fetchBooks = useCallback(async () => {
+        const response = await axios.get('http://localhost:3001/books');
+
+        setBooks(response.data);
+    }, []);
+ 
+
+
+
+
