@@ -395,13 +395,13 @@ root.render(<App />);
 //  3. First argument is a function that contains the code that you want to run
 //  4. Second argument is an array of dependencies or nothing - this controls whether or not the function is executed on re-renders.
 
-// Three tricky points about useEffect:
+# Three tricky points about useEffect:
 
 // I. Understanding WHEN our arrow function is invoked
 // II. Understanding the arrow function's RETURN VALUE
 // III. Understanding state variable references
 
-// I. Understanding WHEN our arrow function is invoked
+# I. Understanding WHEN our arrow function is invoked
 
 // 1. Component called
 // 2. JSX is returned
@@ -551,17 +551,21 @@ useCallback behaves different way after the initial render.
 useCallback is never going to run function for us (it is different from useEffect).
 
 
-## in the first render:
+// in the first render:
 useCallback returns a function that we put as the first argument.
 
-## in the second render:
+// in the second render:
 useCallback behavies differently. It is going to change slightly depending on whether or not the second argument is empty array.
 
 If the second argument IS AN EMPTY ARRAY, useCallback is going to return the exact SAME FUNCTION that it returned in the first render. It ignores the first argument.
 
 If the second argument is NOT AN EMPTY ARRAY, useCallback is going to return a NEW FUNCTION.
 
-### inside the book.js file:
+
+Cleanup function:
+
+
+// inside the book.js file:
 instead of:
 
 const stableFetchBooks = useCallback(fetchBooks, []);
@@ -573,6 +577,42 @@ const fetchBooks = useCallback(async () => {
 
         setBooks(response.data);
     }, []);
+
+## Understanding the arrow function's RETURN VALUE:
+
+useEffect is a function that returns a function.
+
+It cannot use async/await syntax, because it returns a promise automatically.
+It cannot return numbers, strings, arrays, objects, etc.
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  // olny one time when the app component is first rendered to the screen
+
+  useEffect(() => {
+    // don't do this
+    document.body.onclick = () => {
+      console.log(counter);
+    };
+
+    const cleanUp = () => {
+      console.log("cleanUp");
+    };
+    return cleanUp;
+  }, [counter]);
+
+  return (
+    <div>
+      <button onClick={() => setCounter(counter + 1)}>+ Increment</button>
+      <div>Count: {counter}</div>
+    </div>
+  );
+}
+
+export default App;
+
  
 
 
